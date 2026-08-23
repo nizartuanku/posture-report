@@ -32,7 +32,7 @@ a.btn.ghost{background:#eef2f7;color:var(--ink2)}
   <div id="notice" class="notice" style="display:none"></div>
   <h2 id="title">Posture</h2>
   <div class="card">
-    <div class="score"><div><div class="n" id="score">—</div><div class="r" id="rating">—</div></div><div><p id="summary">Reading connected Sentinel tools…</p><p id="gen" style="color:var(--muted);font-size:12px;margin-top:6px"></p></div></div>
+    <div class="score"><div><div class="n" id="score">—</div><div class="r" id="rating">—</div></div><div><p id="summary">Reading connected Hexward tools…</p><p id="gen" style="color:var(--muted);font-size:12px;margin-top:6px"></p></div></div>
     <div class="tiles">
       <div class="tile crit"><div class="v" id="c-critical">0</div><div class="l">Critical</div></div>
       <div class="tile high"><div class="v" id="c-high">0</div><div class="l">High</div></div>
@@ -62,7 +62,7 @@ async function load(){
     $('summary').textContent=sum;
     $('tcount').textContent=s.tools?('('+s.tools+')'):'';
     if(s.notice){$('notice').style.display='block';$('notice').textContent=s.notice}
-    $('sources').innerHTML=(s.sources&&s.sources.length)?s.sources.map(x=>`<div class="src">${esc(x.product)}<span class="o ${x.open?'':'zero'}">${x.open?x.open+' open':'clean'}</span></div>`).join(''):'<div class="empty">No Sentinel databases connected. Point Posture Report at your tools with <code>-dir</code> or <code>-dbs</code>.</div>';
+    $('sources').innerHTML=(s.sources&&s.sources.length)?s.sources.map(x=>`<div class="src">${esc(x.product)}<span class="o ${x.open?'':'zero'}">${x.open?x.open+' open':'clean'}</span></div>`).join(''):'<div class="empty">No Hexward databases connected. Point Posture Report at your tools with <code>-dir</code> or <code>-dbs</code>.</div>';
   }catch(e){}
 }
 load();setInterval(load,15000);
