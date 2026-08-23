@@ -151,7 +151,7 @@ func ratingFor(score int) string {
 func ProductName(module string) string {
 	switch module {
 	case "certwatch":
-		return "CertWatch"
+		return "CertLight"
 	case "asm":
 		return "Attack Surface Monitor"
 	case "decoy":
