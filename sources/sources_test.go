@@ -49,7 +49,7 @@ func TestReadReturnsOnlyOpenGroupedByModule(t *testing.T) {
 	if len(items) != 1 {
 		t.Fatalf("want 1 module group, got %d", len(items))
 	}
-	if items[0].Module != "certwatch" || items[0].Product != "CertWatch" {
+	if items[0].Module != "certwatch" || items[0].Product != "CertLight" {
 		t.Errorf("module/product wrong: %+v", items[0])
 	}
 	if len(items[0].Findings) != 2 {
