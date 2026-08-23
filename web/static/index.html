@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Posture Report</title>
+<style>
+:root{--blue:#4A86D6;--teal:#2FE0C0;--ink:#0f1720;--ink2:#3a4653;--muted:#6b7885;--line:#e3e8ee;--bg:#f5f7fa;--card:#fff;--shadow:0 1px 3px rgba(16,24,40,.06);
+--crit:#c1121f;--high:#e8590c;--med:#d9a406;--low:#2f8f5b;--font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px 60px}
+header{border-bottom:1px solid var(--line);background:rgba(255,255,255,.9);backdrop-filter:blur(8px);position:sticky;top:0}
+.hin{max-width:760px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:10px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:17px}.tier{margin-left:auto;font-size:12px;font-weight:700;padding:4px 11px;border-radius:20px;background:#eaf1fb;color:var(--blue);text-transform:capitalize}
+h2{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:26px 0 12px;font-weight:800}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:20px 22px}
+.score{display:flex;align-items:center;gap:22px}.score .n{font-size:60px;font-weight:800;line-height:1;letter-spacing:-2px}.score .r{font-weight:700;font-size:14px;padding:5px 13px;border-radius:20px;display:inline-block;margin-top:6px}
+.n.good,.r.good{color:var(--low)}.r.good{background:#e9f6ee}.n.fair,.r.fair{color:var(--med)}.r.fair{background:#fbf6e3}.n.att,.r.att{color:var(--high)}.r.att{background:#fdefe6}.n.risk,.r.risk{color:var(--crit)}.r.risk{background:#fdecee}
+.score p{margin:0;color:var(--ink2);font-size:14px}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.tile{border:1px solid var(--line);border-radius:11px;padding:12px;text-align:center}.tile .v{font-size:22px;font-weight:800}.tile .l{font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:700;margin-top:4px}
+.tile.crit .v{color:var(--crit)}.tile.high .v{color:var(--high)}.tile.med .v{color:var(--med)}.tile.low .v{color:var(--low)}
+.btnrow{display:flex;gap:10px;margin-top:18px}
+a.btn{text-decoration:none;border:0;border-radius:10px;padding:12px 18px;font-weight:600;background:var(--blue);color:#fff;font-size:15px}
+a.btn.ghost{background:#eef2f7;color:var(--ink2)}
+.src{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:9px;padding:10px 13px;margin-top:8px;font-size:14px}
+.src .o{margin-left:auto;font-weight:700}.src .o.zero{color:var(--muted);font-weight:600}
+.empty{text-align:center;color:var(--muted);padding:26px;border:1px dashed var(--line);border-radius:12px}
+.notice{background:#fbf6e3;border:1px solid #f0e2ad;color:#8a6d00;border-radius:9px;padding:9px 13px;font-size:13px;margin-top:14px}
+.foot{margin-top:26px;text-align:center;color:var(--muted);font-size:12px;line-height:1.7}.foot a{color:var(--blue);text-decoration:none}
+@media(prefers-color-scheme:dark){:root{--bg:#0d1117;--card:#161b22;--ink:#e6edf3;--ink2:#b7c2cd;--muted:#8b98a5;--line:#26303b}header{background:rgba(13,17,23,.9)}a.btn.ghost{background:#21262d}}
+</style></head><body>
+<header><div class="hin"><span class="brand"><svg width="22" height="24" viewBox="0 0 22 24"><path d="M11 1l9 5.2v10.6L11 23l-9-5.2V6.2z" fill="none" stroke="#4A86D6" stroke-width="1.6"/><path d="M11 6.5l4.3 2.5v5L11 16.5 6.7 14V9z" fill="#2FE0C0"/></svg>Posture Report</span><span id="tier" class="tier">—</span></div></header>
+<div class="wrap">
+  <div id="notice" class="notice" style="display:none"></div>
+  <h2 id="title">Posture</h2>
+  <div class="card">
+    <div class="score"><div><div class="n" id="score">—</div><div class="r" id="rating">—</div></div><div><p id="summary">Reading connected Sentinel tools…</p><p id="gen" style="color:var(--muted);font-size:12px;margin-top:6px"></p></div></div>
+    <div class="tiles">
+      <div class="tile crit"><div class="v" id="c-critical">0</div><div class="l">Critical</div></div>
+      <div class="tile high"><div class="v" id="c-high">0</div><div class="l">High</div></div>
+      <div class="tile med"><div class="v" id="c-medium">0</div><div class="l">Medium</div></div>
+      <div class="tile low"><div class="v" id="c-low">0</div><div class="l">Low</div></div>
+    </div>
+    <div class="btnrow"><a class="btn" href="/report" target="_blank">Open full report</a><a class="btn ghost" href="/report.html">Download</a></div>
+  </div>
+  <h2>Connected tools <span id="tcount" style="color:var(--muted);font-weight:600;letter-spacing:0;text-transform:none"></span></h2>
+  <div id="sources"></div>
+  <div class="foot">Self-hosted · read-only · nothing leaves your network<br><a href="https://github.com/nizartuanku/posture-report">GitHub</a> · <a href="https://whop.com/posture-report">Whop</a></div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+function esc(s){return (s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
+const rc={"Good":"good","Fair":"fair","Needs Attention":"att","At Risk":"risk"};
+async function load(){
+  try{const s=await (await fetch('/api/summary')).json();
+    $('tier').textContent=s.tier;$('title').textContent=(s.title||'Security Posture');
+    $('score').textContent=s.score;$('score').className='n '+(rc[s.rating]||'att');
+    $('rating').textContent=s.rating;$('rating').className='r '+(rc[s.rating]||'att');
+    for(const k of ['critical','high','medium','low'])$('c-'+k).textContent=(s.counts&&s.counts[k])||0;
+    $('gen').textContent='Generated '+(s.generated||'')+' · '+s.tools+' tool(s)';
+    let sum;
+    if(s.open_total===0){sum=(s.manual>0)?('No open findings. '+s.manual+' area(s) flagged for manual review.'):'No open findings across the connected tools — posture is clean.';}
+    else{sum=s.open_total+' open finding(s) across '+s.tools+' tool(s). Open the full report for priorities and remediation.';}
+    $('summary').textContent=sum;
+    $('tcount').textContent=s.tools?('('+s.tools+')'):'';
+    if(s.notice){$('notice').style.display='block';$('notice').textContent=s.notice}
+    $('sources').innerHTML=(s.sources&&s.sources.length)?s.sources.map(x=>`<div class="src">${esc(x.product)}<span class="o ${x.open?'':'zero'}">${x.open?x.open+' open':'clean'}</span></div>`).join(''):'<div class="empty">No Sentinel databases connected. Point Posture Report at your tools with <code>-dir</code> or <code>-dbs</code>.</div>';
+  }catch(e){}
+}
+load();setInterval(load,15000);
+</script>
+</body></html>
