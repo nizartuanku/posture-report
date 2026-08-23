@@ -1,0 +1,4 @@
+/posturereport
+*.db
+*-license.key
+/dist
