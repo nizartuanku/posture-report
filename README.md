@@ -5,8 +5,8 @@
 You run several Hexward tools (TLS, attack surface, canaries, CVEs, firewall audit, logs, DMARC, M365/Workspace posture). Each is great on its own — but a manager wants one answer: *how are we doing, and what do we fix first?* Posture Report reads the open findings from every tool's database (read-only), folds them into a single posture score, and produces one report with two views: an **Executive** page (score, plain-language summary, the handful of things to fix first) and a **Technical** page (every open finding with its remediation). It runs no scans and changes nothing.
 
 ```
-posturereport -dir /var/lib/sentinel      # auto-discover the tools' databases
-posturereport -dbs certwatch.db,asm.db    # or list them
+posturereport -dir /var/lib/hexward       # auto-discover the tools' databases
+posturereport -dbs certlight.db,asm.db    # or list them
 posturereport -out posture.html           # write the report once (cron/monthly)
 ```
 
