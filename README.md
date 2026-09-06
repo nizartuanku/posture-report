@@ -15,4 +15,6 @@ Dashboard on 127.0.0.1:8432; the full report is at /report (Print → PDF).
 ## Editions
 Free reads 3 tools · Pro 20 · Team unlimited. Pro/Team: **whop.com/nizar-tuanku/posture-report?utm_source=github** — part of the **Hexward Essentials (SMB)** bundle.
 
+**Whop sells paid licences only.** Free: github.com/nizartuanku/posture-report — this repository is the free edition, Apache-2.0, no time limit; nothing on Whop is free, so try it here first.
+
 Free edition is Apache-2.0. Part of the Hexward line: **whop.com/nizar-tuanku**
