@@ -41,7 +41,7 @@ SELECT module, target, check_id, title, severity, status, remediation, evidence,
        first_seen, last_seen
 FROM findings WHERE status = 'open'`)
 	if err != nil {
-		return nil, fmt.Errorf("%s: not a readable Sentinel database (%w)", filepath.Base(path), err)
+		return nil, fmt.Errorf("%s: not a readable Hexward database (%w)", filepath.Base(path), err)
 	}
 	defer rows.Close()
 
