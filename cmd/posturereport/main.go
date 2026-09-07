@@ -1,9 +1,9 @@
-// posturereport combines the open findings from every Sentinel tool a company
+// posturereport combines the open findings from every Hexward tool a company
 // runs into one security-posture report — a single score, the priorities to fix
 // first, and an executive + technical view that prints to PDF.
 //
-//	posturereport -dir /var/lib/sentinel      # auto-discover the tools' databases
-//	posturereport -dbs certwatch.db,asm.db    # or list them explicitly
+//	posturereport -dir /var/lib/hexward      # auto-discover the tools' databases
+//	posturereport -dbs certlight.db,asm.db    # or list them explicitly
 //	posturereport -out posture.html           # write the report once (cron/monthly)
 //
 // It reads the databases read-only, runs no scans, and changes nothing.
@@ -44,8 +44,8 @@ var postureTierLimits = map[license.Tier]license.Limits{
 func main() {
 	listen := flag.String("listen", "127.0.0.1:8432", "dashboard listen address")
 	title := flag.String("title", "Security Posture", "report title (usually the company name)")
-	dbsCSV := flag.String("dbs", "", "comma-separated Sentinel database paths")
-	dir := flag.String("dir", "", "directory to auto-discover Sentinel .db files")
+	dbsCSV := flag.String("dbs", "", "comma-separated Hexward database paths")
+	dir := flag.String("dir", "", "directory to auto-discover Hexward .db files")
 	out := flag.String("out", "", "write the report to this HTML file once and exit (cron/monthly mode)")
 	licFile := flag.String("license", "posturereport-license.key", "license key file")
 	flag.Parse()
