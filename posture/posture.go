@@ -1,5 +1,5 @@
 // Package posture is the intelligence of Posture Report: it takes the open
-// findings from every Sentinel tool a company runs (TLS, attack surface,
+// findings from every Hexward tool a company runs (TLS, attack surface,
 // canaries, CVEs, firewall, logs, DMARC, tenant posture, …) and folds them into
 // one executive picture — a single security posture score, the handful of
 // things to fix first, and the blind spots worth reviewing by hand. It is a
@@ -16,7 +16,7 @@ import (
 
 // Item is one source tool's contribution: its open findings.
 type Item struct {
-	Product  string // display name, e.g. "CertWatch"
+	Product  string // display name, e.g. "CertLight"
 	Module   string // module id, e.g. "certwatch"
 	Findings []core.Finding
 }
@@ -146,7 +146,7 @@ func ratingFor(score int) string {
 	}
 }
 
-// ProductName maps a Sentinel module id to its display name. Unknown modules
+// ProductName maps a Hexward module id to its display name. Unknown modules
 // fall back to a title-cased id so a new tool still renders sensibly.
 func ProductName(module string) string {
 	switch module {
