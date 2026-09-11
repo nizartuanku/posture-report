@@ -57,14 +57,14 @@ table.tt th{font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;color:
 :root:not([data-theme=light]) .track,:root:not([data-theme=light]) .btn{background:#21262d}}
 </style></head><body>
 <div class="topbar"><div class="tin">
-  <span class="brand"><svg width="22" height="24" viewBox="0 0 22 24"><path d="M11 1l9 5.2v10.6L11 23l-9-5.2V6.2z" fill="none" stroke="#4A86D6" stroke-width="1.6"/><path d="M11 6.5l4.3 2.5v5L11 16.5 6.7 14V9z" fill="#2FE0C0"/></svg>Posture Report <small>· Sentinel</small></span>
+  <span class="brand"><svg width="22" height="24" viewBox="0 0 22 24"><path d="M11 1l9 5.2v10.6L11 23l-9-5.2V6.2z" fill="none" stroke="#4A86D6" stroke-width="1.6"/><path d="M11 6.5l4.3 2.5v5L11 16.5 6.7 14V9z" fill="#2FE0C0"/></svg>Posture Report <small>· Hexward</small></span>
   <div class="toggle"><button id="t-exec" class="active" onclick="show('exec')">Executive</button><button id="t-tech" onclick="show('tech')">Technical</button></div>
   <button class="btn" onclick="window.print()">Print / PDF</button>
 </div></div>
 <div class="wrap">
   <div class="rhead">
     <h1>{{.Rep.Title}}</h1>
-    <div class="sub">Combined security posture across {{.ToolCount}} Sentinel tool(s)</div>
+    <div class="sub">Combined security posture across {{.ToolCount}} Hexward tool(s)</div>
     <div class="meta">
       <div><div class="k">Generated</div><div class="v">{{.Generated}}</div></div>
       <div><div class="k">Open findings</div><div class="v">{{.Rep.OpenTotal}}</div></div>
@@ -119,11 +119,11 @@ table.tt th{font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;color:
       {{end}}{{else}}<div class="empty">No open findings across the connected tools.</div>{{end}}
     </section>
     <section><div class="s-title">Methodology</div><div class="card">
-      <div style="font-size:13.5px;color:var(--ink2)">Posture Report reads the open findings from each connected Sentinel tool's local database, read-only, and combines them. It runs no scans of its own and changes nothing. The score weights findings by severity (critical &gt; high &gt; medium &gt; low); info-level "manual review" items are shown as blind spots but never scored against.</div>
+      <div style="font-size:13.5px;color:var(--ink2)">Posture Report reads the open findings from each connected Hexward tool's local database, read-only, and combines them. It runs no scans of its own and changes nothing. The score weights findings by severity (critical &gt; high &gt; medium &gt; low); info-level "manual review" items are shown as blind spots but never scored against.</div>
     </div></section>
   </div>
 
-  <div class="foot">Posture Report · Sentinel — self-hosted security tooling · generated locally, no data leaves your network</div>
+  <div class="foot">Posture Report · Hexward — self-hosted security tooling · generated locally, no data leaves your network</div>
 </div>
 <script>function show(w){var e=w=='exec';document.getElementById('view-exec').classList.toggle('hide',!e);document.getElementById('view-tech').classList.toggle('hide',e);document.getElementById('t-exec').classList.toggle('active',e);document.getElementById('t-tech').classList.toggle('active',!e);window.scrollTo({top:0,behavior:'smooth'})}</script>
 </body></html>`

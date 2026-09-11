@@ -81,9 +81,9 @@ func HTML(rep posture.Report) string {
 func summarise(rep posture.Report) string {
 	if rep.OpenTotal == 0 {
 		if len(rep.ManualReviews) > 0 {
-			return fmt.Sprintf("No open findings across %d connected Sentinel tool(s). %d area(s) are flagged for manual review — worth a look, but nothing is actively failing.", len(rep.Sources), len(rep.ManualReviews))
+			return fmt.Sprintf("No open findings across %d connected Hexward tool(s). %d area(s) are flagged for manual review — worth a look, but nothing is actively failing.", len(rep.Sources), len(rep.ManualReviews))
 		}
-		return fmt.Sprintf("No open findings across %d connected Sentinel tool(s). Posture is clean this period — keep the tools running so it stays that way.", len(rep.Sources))
+		return fmt.Sprintf("No open findings across %d connected Hexward tool(s). Posture is clean this period — keep the tools running so it stays that way.", len(rep.Sources))
 	}
 	c := rep.Counts["critical"]
 	h := rep.Counts["high"]
@@ -96,7 +96,7 @@ func summarise(rep posture.Report) string {
 	default:
 		lead = "no critical or high-severity issues — the open items are lower-priority hygiene"
 	}
-	return fmt.Sprintf("%d open finding(s) across %d Sentinel tool(s); %s. The priorities below are ordered so the highest-risk items are fixed first.", rep.OpenTotal, len(rep.Sources), lead)
+	return fmt.Sprintf("%d open finding(s) across %d Hexward tool(s); %s. The priorities below are ordered so the highest-risk items are fixed first.", rep.OpenTotal, len(rep.Sources), lead)
 }
 
 var funcs = template.FuncMap{
