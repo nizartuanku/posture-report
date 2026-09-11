@@ -1,6 +1,6 @@
-// Package sources reads the open findings out of another Sentinel tool's SQLite
+// Package sources reads the open findings out of another Hexward tool's SQLite
 // database, read-only. Every tool in the line writes the same findings schema
-// (that's the whole point of Sentinel Core), so Posture Report can open each
+// (that's the whole point of Hexward Core), so Posture Report can open each
 // tool's db beside it, read what it found, and never write a byte. One db file
 // may hold more than one module; Read groups by module into posture.Items.
 package sources
@@ -23,8 +23,8 @@ var openDB = func(path string) (*sql.DB, error) {
 	return sql.Open("sqlite3", "file:"+path+"?mode=ro&_busy_timeout=2000")
 }
 
-// Read returns the OPEN findings in one Sentinel database, grouped by module.
-// A file that has no findings table (not a Sentinel db) is a user-facing error,
+// Read returns the OPEN findings in one Hexward database, grouped by module.
+// A file that has no findings table (not a Hexward db) is a user-facing error,
 // so the caller can warn and skip it rather than failing the whole report.
 func Read(path string) ([]posture.Item, error) {
 	db, err := openDB(path)
@@ -87,7 +87,7 @@ FROM findings WHERE status = 'open'`)
 	return items, nil
 }
 
-// Discover finds Sentinel database files in a directory (non-recursive). Used by
+// Discover finds Hexward database files in a directory (non-recursive). Used by
 // the "-dir" convenience flag so a single-box deployment needs no per-file list.
 func Discover(dir string) ([]string, error) {
 	entries, err := os.ReadDir(dir)
