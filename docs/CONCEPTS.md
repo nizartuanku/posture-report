@@ -78,10 +78,10 @@ After: one number, one method that fits in a table, one printable page — and a
 The free Apache-2.0 edition on GitHub runs the same engine, three tools, with no time limit.
 
 ```
-curl -LO https://github.com/nizartuanku/posture-report/releases/latest/download/posture-report-free-0.1.0-linux-amd64.tar.gz
+curl -LO https://github.com/nizartuanku/posture-report/releases/latest/download/posture-report-free-0.1.1-linux-amd64.tar.gz
 curl -LO https://github.com/nizartuanku/posture-report/releases/latest/download/SHA256SUMS
 sha256sum -c SHA256SUMS
-tar xzf posture-report-free-0.1.0-linux-amd64.tar.gz && cd posture-report-0.1.0 && ./posturereport -dir /var/lib/hexward
+tar xzf posture-report-free-0.1.1-linux-amd64.tar.gz && cd posture-report-0.1.1 && ./posturereport -dir /var/lib/hexward
 ```
 
 Open 127.0.0.1:8432 and go to `/report`. If you have no Hexward tool running yet, point `-dbs` at one database from any of them; the report will tell you truthfully that it read one tool.

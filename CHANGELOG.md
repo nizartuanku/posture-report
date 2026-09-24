@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.1.1 — 2026-09-24
 
 - **The retired umbrella brand is gone from everything a reader can see.** The `-h` output, the unreadable-database error, the report output, the dashboard footer and the package comments in `core`, `license`, `posture` and `sources` all still carried the pre-rename name. They read Hexward now. The binary that ships next is the first one in which the name a user sees matches the name on the product.
 - **`scripts/first-run.sh` — one command from a clean machine to a working report.** It resolves the latest release at run time rather than pinning a tag, verifies the download against `SHA256SUMS` with no `--ignore-missing`, extracts, starts the binary and polls `/report` until it answers. If the port is already taken it says so instead of letting the binary exit a second later and read like a broken product (`FIRST_RUN_PORT` overrides). When the unauthenticated GitHub API budget of 60 calls per hour is spent, the script names the rate limit and when it resets, instead of reporting "cannot reach".
