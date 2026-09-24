@@ -26,6 +26,16 @@ a.btn.ghost{background:#eef2f7;color:var(--ink2)}
 .notice{background:#fbf6e3;border:1px solid #f0e2ad;color:#8a6d00;border-radius:9px;padding:9px 13px;font-size:13px;margin-top:14px}
 .foot{margin-top:26px;text-align:center;color:var(--muted);font-size:12px;line-height:1.7}.foot a{color:var(--blue);text-decoration:none}
 @media(prefers-color-scheme:dark){:root{--bg:#0d1117;--card:#161b22;--ink:#e6edf3;--ink2:#b7c2cd;--muted:#8b98a5;--line:#26303b}header{background:rgba(13,17,23,.9)}a.btn.ghost{background:#21262d}}
+  /* Fix-first list + AI Assist ("Explain"): narration is styled apart from the
+     finding so it always reads as narration, never as a new fact. */
+  .pri{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:12px 14px;margin-bottom:9px}
+  .pri .ph{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}.pri .sv{font-size:11px;font-weight:700;text-transform:uppercase;color:var(--muted)}
+  .pri .pt{font-weight:600}.pri .pm{font-size:12px;color:var(--muted)}.pri .pr{font-size:13.5px;margin-top:6px;color:var(--ink2)}
+  button.aibtn{margin-top:8px;padding:5px 11px;font-size:12.5px;border:1px solid var(--line);border-radius:8px;background:transparent;color:inherit;cursor:pointer}
+  button.aibtn:disabled{opacity:.5;cursor:not-allowed}
+  .ai-explain{margin-top:9px;padding:10px 12px;border-radius:9px;border:1px solid var(--line);font-size:13.5px}
+  .ai-explain.muted{font-style:italic;color:var(--muted)} .ai-verify{margin-top:8px} .ai-verify ul{margin:4px 0 0 18px;padding:0}
+  .ai-disclaimer{margin-top:8px;font-size:11.5px;color:var(--muted)}
 </style></head><body>
 <header><div class="hin"><span class="brand"><svg width="22" height="24" viewBox="0 0 22 24"><path d="M11 1l9 5.2v10.6L11 23l-9-5.2V6.2z" fill="none" stroke="#4A86D6" stroke-width="1.6"/><path d="M11 6.5l4.3 2.5v5L11 16.5 6.7 14V9z" fill="#2FE0C0"/></svg>Posture Report</span><span id="tier" class="tier">—</span></div></header>
 <div class="wrap">
@@ -41,6 +51,8 @@ a.btn.ghost{background:#eef2f7;color:var(--ink2)}
     </div>
     <div class="btnrow"><a class="btn" href="/report" target="_blank">Open full report</a><a class="btn ghost" href="/report.html">Download</a></div>
   </div>
+  <h2>Fix first</h2>
+  <div id="priorities"><div class="empty">Reading connected Hexward tools…</div></div>
   <h2>Connected tools <span id="tcount" style="color:var(--muted);font-weight:600;letter-spacing:0;text-transform:none"></span></h2>
   <div id="sources"></div>
   <div class="foot">Free edition — no time limit. Pro and Team licences are sold on Whop: <a href="https://whop.com/nizar-tuanku/posture-report?utm_source=app" target="_blank" rel="noopener">whop.com/nizar-tuanku/posture-report</a><br>Self-hosted · read-only · nothing leaves your network<br><a href="https://github.com/nizartuanku/posture-report">GitHub</a> · <a href="https://whop.com/nizar-tuanku/posture-report?utm_source=app" target="_blank" rel="noopener">Pro and Team on Whop</a></div>
@@ -66,5 +78,28 @@ async function load(){
   }catch(e){}
 }
 load();setInterval(load,15000);
+
+// --- Fix first + AI Assist: "Explain" ---------------------------------------
+// The findings come from the connected Hexward tools, read-only. The optional
+// hexward-ai sidecar only narrates one of them on request; if AI Assist is off
+// or unreachable there is no button or a quiet note, and nothing else changes.
+var aiEnabled=false, aiState={}, lastPri=[];
+fetch('/api/ai').then(r=>r.json()).then(d=>{aiEnabled=!!d.enabled;renderPri()}).catch(()=>{});
+async function loadPri(){try{lastPri=await (await fetch('/api/priorities')).json()}catch(e){}renderPri()}
+function renderPri(){
+  $('priorities').innerHTML=(lastPri&&lastPri.length)?lastPri.map(f=>`<div class="pri"><div class="ph"><span class="sv">${esc(f.severity)}</span><span class="pt">${esc(f.title)}</span><span class="pm">${esc(f.target)} · ${esc(f.module)}</span></div><div class="pr">→ ${esc(f.remediation)}</div>${aiEnabled?aiButton(f):''}${aiPanel(f)}</div>`).join(''):'<div class="empty">Nothing to fix first.</div>'}
+function aiButton(f){const st=aiState[f.fingerprint];const busy=st&&st.status==='loading';
+  return `<button class="aibtn" ${busy?'disabled':''} onclick="explainFinding('${f.fingerprint}')">${busy?'Explaining…':'✨ Explain'}</button>`}
+function aiPanel(f){const st=aiState[f.fingerprint];if(!st)return '';
+  if(st.status==='loading')return `<div class="ai-explain muted">Asking AI Assist to explain this finding. It runs on your own hardware and can take up to a minute.</div>`;
+  if(st.status!=='done')return `<div class="ai-explain muted">${esc(st.message||'AI Assist is not reachable right now.')} The finding above is unaffected.</div>`;
+  const v=(st.whatToVerify||[]).length?`<div class="ai-verify"><b>What to verify:</b><ul>${st.whatToVerify.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:'';
+  return `<div class="ai-explain"><div>${esc(st.explanation)}</div>${v}<div class="ai-disclaimer">${esc(st.disclaimer)}</div></div>`}
+async function explainFinding(fp){aiState[fp]={status:'loading'};renderPri();
+  try{const d=await (await fetch('/api/findings/explain',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fingerprint:fp})})).json();
+    aiState[fp]=d.available?{status:'done',explanation:d.explanation,whatToVerify:d.what_to_verify,disclaimer:d.disclaimer}:{status:'unavailable',message:d.reason||d.error}}
+  catch(e){aiState[fp]={status:'error',message:'AI Assist request failed.'}}
+  renderPri()}
+loadPri();setInterval(loadPri,15000);
 </script>
 </body></html>

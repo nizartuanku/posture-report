@@ -37,7 +37,7 @@ func Read(path string) ([]posture.Item, error) {
 
 func readDB(db *sql.DB, path string) ([]posture.Item, error) {
 	rows, err := db.Query(`
-SELECT module, target, check_id, title, severity, status, remediation, evidence,
+SELECT fingerprint, module, target, check_id, title, severity, status, remediation, evidence,
        first_seen, last_seen
 FROM findings WHERE status = 'open'`)
 	if err != nil {
@@ -54,10 +54,13 @@ FROM findings WHERE status = 'open'`)
 			first    time.Time
 			last     time.Time
 		)
-		if err := rows.Scan(&f.Module, &f.Target, &f.Check, &f.Title, &sev, &st,
+		// fingerprint lets the dashboard ask AI Assist about one exact finding.
+		var fp sql.NullString
+		if err := rows.Scan(&fp, &f.Module, &f.Target, &f.Check, &f.Title, &sev, &st,
 			&f.Remediation, &evidence, &first, &last); err != nil {
 			return nil, err
 		}
+		f.Fingerprint = fp.String
 		f.Severity = core.Severity(sev)
 		f.Status = core.FindingStatus(st)
 		f.FirstSeen, f.LastSeen = first, last

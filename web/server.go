@@ -23,6 +23,10 @@ type Server struct {
 	Load   func() posture.Report
 	Tier   string
 	Notice string
+
+	// AI, when set, enables the optional AI Assist "Explain" button on the
+	// dashboard's fix-first list (see ai.go). nil = off, the default.
+	AI *AIAssist
 }
 
 // Handler builds the HTTP handler.
@@ -31,6 +35,7 @@ func (s *Server) Handler() http.Handler {
 	mux.HandleFunc("GET /api/summary", s.handleSummary)
 	mux.HandleFunc("GET /report", s.handleReport)
 	mux.HandleFunc("GET /report.html", s.handleDownload)
+	s.registerAI(mux)
 	sub, _ := fs.Sub(staticFS, "static")
 	mux.Handle("GET /", http.FileServer(http.FS(sub)))
 	return mux
