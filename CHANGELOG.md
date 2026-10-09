@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Docs: `docs/samples/` added — a real report generated from a genuine CertLight database, exported as the server returned it.
 - Docs: English is the supported AI Assist language in this release. Bahasa Indonesia
   (`-ai-assist-lang id`) is an unsupported preview; more languages will be added based on demand.
 

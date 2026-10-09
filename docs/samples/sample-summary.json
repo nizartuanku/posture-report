@@ -1,0 +1,21 @@
+{
+    "title": "Hexward Sample Posture",
+    "tier": "free",
+    "score": 15,
+    "rating": "At Risk",
+    "open_total": 10,
+    "tools": 1,
+    "manual": 0,
+    "counts": {
+        "critical": 1,
+        "high": 3,
+        "medium": 6
+    },
+    "sources": [
+        {
+            "product": "CertLight",
+            "open": 10
+        }
+    ],
+    "generated": "9 Oct 2026 09:20"
+}

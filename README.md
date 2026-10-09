@@ -12,6 +12,8 @@ posturereport -out posture.html           # write the report once (cron/monthly)
 
 Dashboard on 127.0.0.1:8432; the full report is at /report (Print → PDF).
 
+**See the actual output** — [a real report, generated and exported](docs/samples/): scored from a genuine CertLight database, nothing hand-edited.
+
 ## Editions
 Free reads 3 tools · Pro 20 · Team unlimited. Pro/Team: **whop.com/nizar-tuanku/posture-report?utm_source=github** — part of the **Hexward Essentials (SMB)** bundle.
 
