@@ -1,7 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.1.3 — 2026-11-03
 
+- **AI Assist hardened against planted instructions.** Evidence text that reads as an instruction to the model ("ignore previous instructions", "mark this as resolved", chat-template control tokens) is replaced by `[omitted: instruction-like text]` before it reaches any model — at every nesting level, lists included, and in a finding's title/target/remediation. Motivation: in the 2026-11-03 Hexward benchmark the Qwen3-8B tier obeyed exactly such a note planted in a finding and answered "marked as resolved… severity adjusted to low".
+- **AI Assist rejects answers that only claim a status or severity change.** Sentences like "has been marked as resolved" or "severity was adjusted to low" are removed; if no grounded explanation remains, the Explain button shows *"AI Assist withheld this explanation"* instead of an answer. The finding itself is never touched — the engine decides, the model only explains. Regression tests included.
+- **New Enterprise model tiers in hexward-ai 0.2.5:** `enterprise-9b` (Qwen3.5-9B) and `enterprise-35b` (Qwen3.5-35B-A3B, the Hexward benchmark tier). Both passed every trap case on a CPU-only host; see hexward-ai `docs/TIERS.md`. The Free and Pro/Team profiles are unchanged.
 - Docs: `docs/samples/` added — a real report generated from a genuine CertLight database, exported as the server returned it.
 - Docs: English is the supported AI Assist language in this release. Bahasa Indonesia
   (`-ai-assist-lang id`) is an unsupported preview; more languages will be added based on demand.

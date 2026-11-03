@@ -31,7 +31,7 @@ func fakeAISidecar(t *testing.T, calls *atomic.Int32, lastBody *atomic.Value) *h
 		n, _ := r.Body.Read(b)
 		body.Write(b[:n])
 		lastBody.Store(body.String())
-		content, _ := json.Marshal(map[string]any{"explanation": "It expired.", "what_to_verify": []string{"Check renewal."}, "disclaimer": "x"})
+		content, _ := json.Marshal(map[string]any{"explanation": "The certificate expired, so clients will reject the connection.", "what_to_verify": []string{"Check renewal."}, "disclaimer": "x"})
 		json.NewEncoder(w).Encode(map[string]any{"choices": []map[string]any{{"message": map[string]any{"role": "assistant", "content": string(content)}}}})
 	}))
 	t.Cleanup(srv.Close)
